@@ -1,6 +1,6 @@
 {
   "name": "shadersmith-r3f",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "A package for cool animated gradients in React projects using TypeScript.",
   "module": "dist/index.js",
