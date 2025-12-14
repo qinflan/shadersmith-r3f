@@ -35,9 +35,13 @@ const GradientMesh = ({
             material.uniforms.uTime.value = state.clock.elapsedTime;
     })
 
+    // add extra margin to plane size to account for vertex deformations pulling edges in
+    const width = viewport.width + amplitude * 2
+    const height = viewport.height + amplitude * 2
+
     return (
         <mesh>
-            <planeGeometry args={[viewport.width, viewport.height, 200, 200]} />
+            <planeGeometry args={[width, height, 400, 400]} />
             <primitive object={material} attach="material" />
         </mesh>
     );
@@ -49,11 +53,16 @@ export const Shadersmith = ({
     amplitude = 20,
     animationSpeed = 0.5,
     grain = 25,
-    camera,
     className,
 }: ShadersmithProps) => {
-    const camPosition = camera?.position ?? [0,0,50];
-    const fov = camera?.fov ?? 50;
+
+    const defaultCamPosition: [number, number, number] =
+        preset === "liquid" ? [0, 0, 12] :
+        preset === "valley" ? [0, 0, 12] :
+        [0, 0, 50];
+
+    const camPosition = defaultCamPosition;
+    const fov = 50;
 
     return (
         <Canvas 

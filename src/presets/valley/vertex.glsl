@@ -3,8 +3,13 @@ uniform float uAmplitude;
 uniform float uAnimationSpeed;
 varying float vHeight;
 
-//	simplex 3D noise
-//	credit to Ian McEwan, Stefan Gustavson (https://github.com/stegu/webgl-noise)
+// Simplex 3D Noise
+// Copyright (C) 2011 by Ashima Arts
+// Copyright (C) 2011-2016 by Stefan Gustavson
+// Credit to Ian McEwan, Stefan Gustavson (https://github.com/stegu/webgl-noise)
+// Source: https://github.com/stegu/webgl-noise
+// Used under the MIT license
+// Adapted for use in Shadersmith's "Valley" preset shader
 
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
