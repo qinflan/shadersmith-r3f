@@ -1,17 +1,19 @@
 {
   "name": "shadersmith-r3f",
   "version": "1.0.0",
-  "description": "",
+  "description": "A package for cool animated gradients in React projects using TypeScript.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup"
   },
   "keywords": [],
-  "author": "",
+  "author": "Quinn Flanigan",
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^19.2.7",
+    "@types/three": "^0.182.0",
+    "three": "^0.182.0",
     "tslib": "^2.8.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                // modern JS output
+    "module": "ESNext",                // use ES modules
+    "moduleResolution": "node",        // resolve modules like Node
+    "declaration": true,               // generate .d.ts files
+    "outDir": "dist",                  // build output
+    "jsx": "react-jsx",                // support React 18 JSX
+    "strict": true,                    // enable strict type checking
+    "esModuleInterop": true,           // for importing CJS modules
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true               // skip type checks of node_modules
+  },
+  "include": ["src"]                   // include your source files
+}
