@@ -54,5 +54,15 @@ export default function App() {
 }
 ```
 
-**The gradient component scales to full height and width of it's parent, so if you are having issues seeing your component, ensure that it's parent DOM element has a height and width and is placed within the viewport.**
+> **NOTE:** The gradient component scales to full height and width of its parent, so if you are having issues seeing your component, ensure that its parent DOM element has explicit height and width.
+
+## Arguments / Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `preset` | `"valley" | "liquid" | "gloss"` | `"valley"` | Shader preset, each has a unique visual style. |
+| `amplitude` | `number (0-100)` | `20` | Intensity of the gradient. 0 = flat, 100 = extreme. |
+| `animationSpeed` | `number (0-1)` | `0.5` | Controls how fast the gradient animates. |
+| `colors` | `RGBA[5]` | Default palette | Array of 5 RGBA colors. Low amplitude may hide some colors. |
+| `grain` | `number (0-100)` | `25` | Grain overlay for softer, distorted, or “film-like” effect. |
 
