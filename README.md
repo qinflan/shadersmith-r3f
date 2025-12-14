@@ -1,12 +1,12 @@
 # shadersmith-r3f
 
-Modular animated gradient shader component for React Three Fiber.
+**A modular animated gradient shader component for React Three Fiber.**
 
 Check out the possibilities of this package by playing around in the web-app:
 
 https://shadersmith.vercel.app/
 
-You can also get copy and pastable code snippets so you can customize your art in the web-app, then have it inside your react app in seconds!
+*You can also get copy and pastable code snippets so you can customize your art in the web-app, then have it inside your react app in seconds!*
 
 This package is only currently supporting React Projects, maybe further support for additonal frameworks will come at some point.
 
@@ -33,6 +33,7 @@ npm install shadersmith-r3f
 
 ## Basic Usage
 
+```tsx
 import { Shadersmith } from "shadersmith-r3f";
 
 export default function App() {
@@ -54,4 +55,7 @@ export default function App() {
     </div>
   );
 }
+```
+
+**The gradient component scales to full height and width of it's parent, so if you are having issues seeing your component, ensure that it's parent DOM element has a height and width and is placed within the viewport.**
 
