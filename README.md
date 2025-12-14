@@ -3,12 +3,9 @@
 **A modular animated gradient shader component for React Three Fiber.**
 
 Check out the possibilities of this package by playing around in the web-app:
-
 https://shadersmith.vercel.app/
 
 *You can also get copy and pastable code snippets so you can customize your art in the web-app, then have it inside your react app in seconds!*
-
-This package is only currently supporting React Projects, maybe further support for additonal frameworks will come at some point.
 
 ## Dependencies
 
