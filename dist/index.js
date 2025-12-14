@@ -6,7 +6,106 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // src/presets/valley/vertex.glsl
-var vertex_default = "uniform float uTime;\nuniform float uAmplitude;\nuniform float uAnimationSpeed;\nvarying float vHeight;\n\n//	simplex 3D noise\n//	credit to Ian McEwan, Stefan Gustavson (https://github.com/stegu/webgl-noise)\n\nvec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}\nvec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}\n\nfloat snoise(vec3 v){ \n  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\n  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\n\n// First corner\n  vec3 i  = floor(v + dot(v, C.yyy) );\n  vec3 x0 =   v - i + dot(i, C.xxx) ;\n\n// Other corners\n  vec3 g = step(x0.yzx, x0.xyz);\n  vec3 l = 1.0 - g;\n  vec3 i1 = min( g.xyz, l.zxy );\n  vec3 i2 = max( g.xyz, l.zxy );\n\n  //  x0 = x0 - 0. + 0.0 * C \n  vec3 x1 = x0 - i1 + 1.0 * C.xxx;\n  vec3 x2 = x0 - i2 + 2.0 * C.xxx;\n  vec3 x3 = x0 - 1. + 3.0 * C.xxx;\n\n// Permutations\n  i = mod(i, 289.0 ); \n  vec4 p = permute( permute( permute( \n             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\n           + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) \n           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\n\n// Gradients\n// ( N*N points uniformly over a square, mapped onto an octahedron.)\n  float n_ = 1.0/7.0; // N=7\n  vec3  ns = n_ * D.wyz - D.xzx;\n\n  vec4 j = p - 49.0 * floor(p * ns.z *ns.z);  //  mod(p,N*N)\n\n  vec4 x_ = floor(j * ns.z);\n  vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\n\n  vec4 x = x_ *ns.x + ns.yyyy;\n  vec4 y = y_ *ns.x + ns.yyyy;\n  vec4 h = 1.0 - abs(x) - abs(y);\n\n  vec4 b0 = vec4( x.xy, y.xy );\n  vec4 b1 = vec4( x.zw, y.zw );\n\n  vec4 s0 = floor(b0)*2.0 + 1.0;\n  vec4 s1 = floor(b1)*2.0 + 1.0;\n  vec4 sh = -step(h, vec4(0.0));\n\n  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\n  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\n\n  vec3 p0 = vec3(a0.xy,h.x);\n  vec3 p1 = vec3(a0.zw,h.y);\n  vec3 p2 = vec3(a1.xy,h.z);\n  vec3 p3 = vec3(a1.zw,h.w);\n\n//Normalise gradients\n  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\n  p0 *= norm.x;\n  p1 *= norm.y;\n  p2 *= norm.z;\n  p3 *= norm.w;\n\n// Mix final noise value\n  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\n  m = m * m;\n  return 10.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), \n                                dot(p2,x2), dot(p3,x3) ) );\n}\n\n\nvoid main() {\n    vec3 pos = position;\n\n    // sample simplex noise using the vertex position and time\n    float noise = snoise(vec3(pos.x * 0.1, pos.y * 0.1, uTime * uAnimationSpeed));\n\n    // displace vertex position along z using noise\n    pos.z += noise * uAmplitude;\n\n    // set vertex height\n    vHeight = pos.z;\n\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);\n}";
+var vertex_default = `uniform float uTime;
+uniform float uAmplitude;
+uniform float uAnimationSpeed;
+varying float vHeight;
+
+// Simplex 3D Noise
+// Copyright (C) 2011 by Ashima Arts
+// Copyright (C) 2011-2016 by Stefan Gustavson
+// Credit to Ian McEwan, Stefan Gustavson (https://github.com/stegu/webgl-noise)
+// Source: https://github.com/stegu/webgl-noise
+// Used under the MIT license
+// Adapted for use in Shadersmith's "Valley" preset shader
+
+vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+
+float snoise(vec3 v){ 
+  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+// First corner
+  vec3 i  = floor(v + dot(v, C.yyy) );
+  vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+// Other corners
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min( g.xyz, l.zxy );
+  vec3 i2 = max( g.xyz, l.zxy );
+
+  //  x0 = x0 - 0. + 0.0 * C 
+  vec3 x1 = x0 - i1 + 1.0 * C.xxx;
+  vec3 x2 = x0 - i2 + 2.0 * C.xxx;
+  vec3 x3 = x0 - 1. + 3.0 * C.xxx;
+
+// Permutations
+  i = mod(i, 289.0 ); 
+  vec4 p = permute( permute( permute( 
+             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+           + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+// Gradients
+// ( N*N points uniformly over a square, mapped onto an octahedron.)
+  float n_ = 1.0/7.0; // N=7
+  vec3  ns = n_ * D.wyz - D.xzx;
+
+  vec4 j = p - 49.0 * floor(p * ns.z *ns.z);  //  mod(p,N*N)
+
+  vec4 x_ = floor(j * ns.z);
+  vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+  vec4 x = x_ *ns.x + ns.yyyy;
+  vec4 y = y_ *ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+
+  vec4 b0 = vec4( x.xy, y.xy );
+  vec4 b1 = vec4( x.zw, y.zw );
+
+  vec4 s0 = floor(b0)*2.0 + 1.0;
+  vec4 s1 = floor(b1)*2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+  vec3 p0 = vec3(a0.xy,h.x);
+  vec3 p1 = vec3(a0.zw,h.y);
+  vec3 p2 = vec3(a1.xy,h.z);
+  vec3 p3 = vec3(a1.zw,h.w);
+
+//Normalise gradients
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+  p0 *= norm.x;
+  p1 *= norm.y;
+  p2 *= norm.z;
+  p3 *= norm.w;
+
+// Mix final noise value
+  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m * m;
+  return 10.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
+                                dot(p2,x2), dot(p3,x3) ) );
+}
+
+
+void main() {
+    vec3 pos = position;
+
+    // sample simplex noise using the vertex position and time
+    float noise = snoise(vec3(pos.x * 0.1, pos.y * 0.1, uTime * uAnimationSpeed));
+
+    // displace vertex position along z using noise
+    pos.z += noise * uAmplitude;
+
+    // set vertex height
+    vHeight = pos.z;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+}`;
 
 // src/presets/valley/fragment.glsl
 var fragment_default = "uniform vec4 uColors[5]; // array of colors\r\nuniform float uGrain;\r\n\r\nvarying float vHeight; // passed z displacement for vertices from vertex shader\r\n\r\n// noise function for grain\r\nfloat rand(vec2 co) {\r\n    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);\r\n}\r\n\r\nvoid main() {\r\n    float t = (vHeight + 10.0) / 20.0;\r\n    t = clamp(t, 0.0, 1.0);\r\n    vec4 color;\r\n\r\n\r\n    if (t < 0.25) {\r\n        float f = t / 0.25;\r\n        color = mix(uColors[0], uColors[1], f);\r\n    } else if (t < 0.5) {\r\n        float f = (t - 0.25) / 0.25;\r\n        color = mix(uColors[1], uColors[2], f);\r\n    } else if (t < 0.75) {\r\n        float f = (t - 0.5) / 0.25;\r\n        color = mix(uColors[2], uColors[3], f);\r\n    } else {\r\n        float f = (t - 0.75) / 0.25;\r\n        color = mix(uColors[3], uColors[4], f);\r\n    }\r\n\r\n    vec2 grainUV = gl_FragCoord.xy;\r\n    float g = rand(grainUV);\r\n\r\n    float prob = clamp(uGrain * 0.02, 0.0, 1.0);\r\n\r\n    // only some pixels get grain\r\n    if (g < prob) {\r\n        float grainAmount = (rand(grainUV + 1.0) - 0.5) * 0.05; // subtle intensity\r\n        color.rgb += grainAmount;\r\n    }\r\n\r\n    gl_FragColor = color;\r\n}\r\n";
@@ -124,3 +223,15 @@ var Shadersmith = ({
 export {
   Shadersmith
 };
+/*!
+ * Shadersmith-r3f v1.0.0
+ * A package for animated gradient shaders in React using Three.js & @react-three/fiber
+ * 
+ * Copyright (c) 2025 Quinn Flanigan
+ * Licensed under the MIT License.
+ *
+ * Includes adapted Simplex 3D noise function:
+ *   - Original by Ian McEwan, Stefan Gustavson
+ *   - Source: https://github.com/stegu/webgl-noise
+ *   - Used under MIT license in the "Valley" preset vertex shader
+ */
