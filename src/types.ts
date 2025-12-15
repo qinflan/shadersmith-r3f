@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export type PresetName = "valley" | "liquid" | "gloss"
 
 export type RGBA = [number, number, number, number]
@@ -8,5 +10,6 @@ export interface ShadersmithProps {
     amplitude?: number,
     animationSpeed?: number,
     grain?: number,
-    className?: string
+    className?: string,
+    children?: ReactNode
 }

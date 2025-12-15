@@ -193,27 +193,53 @@ var Shadersmith = ({
   amplitude = 20,
   animationSpeed = 0.5,
   grain = 25,
-  className
+  className,
+  children
 }) => {
   const defaultCamPosition = preset === "liquid" ? [0, 0, 12] : preset === "valley" ? [0, 0, 12] : [0, 0, 50];
   const camPosition = defaultCamPosition;
   const fov = 50;
   return /* @__PURE__ */ jsxs(
-    Canvas,
+    "div",
     {
       className,
-      style: { width: "100%", height: "100%" },
-      camera: { position: camPosition, fov },
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        width: "100%",
+        height: "100%"
+      },
       children: [
-        /* @__PURE__ */ jsx("ambientLight", { intensity: 1 }),
-        /* @__PURE__ */ jsx(
-          GradientMesh,
+        /* @__PURE__ */ jsxs(
+          Canvas,
           {
-            preset,
-            colors,
-            amplitude,
-            animationSpeed,
-            grain
+            style: { position: "absolute", inset: 0 },
+            camera: { position: camPosition, fov },
+            children: [
+              /* @__PURE__ */ jsx("ambientLight", { intensity: 1 }),
+              /* @__PURE__ */ jsx(
+                GradientMesh,
+                {
+                  preset,
+                  colors,
+                  amplitude,
+                  animationSpeed,
+                  grain
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            style: {
+              position: "relative",
+              width: "100%",
+              height: "100%"
+            },
+            children
           }
         )
       ]
