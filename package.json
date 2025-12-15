@@ -3,6 +3,11 @@
   "version": "1.0.3",
   "type": "module",
   "description": "A modular and customizable animated gradient component for React applications.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qinflan/shadersmith-r3f.git"
+  },
+  "homepage": "https://github.com/qinflan/shadersmith-r3f#readme",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
