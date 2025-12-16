@@ -1,22 +1,21 @@
 # shadersmith-r3f
+![optimized-liquid-bg](https://github.com/user-attachments/assets/7a8d141d-88da-4a65-beae-3598dc40c1a4)
 
-**A modular animated gradient shader component for React Three Fiber.**
+**Modular/animated shader gradient components for React apps.**
 
-Check out the possibilities of this package by playing around in the web-app:
-https://shadersmith.vercel.app/
-
-*You can also get copy and pastable code snippets so you can customize your art in the web-app, then have it inside your react app in seconds!*
+**Check it out: 
+https://shadersmith.vercel.app/**. *Customize your own art and drop into your app!*
+<br>
+<br>
 
 ## Dependencies
-
-This package uses a few peer dependencies, so you must install them before shadersmith-r3f in order to avoid errors or warnings.
-
-
+**react, three.js, @react-three/fiber are required to use this package.**
+<br>
+<br>
 ## Installation
 
-### 1. Install peer dependencies
-
-Shadersmith relies on React Three Fiber and Three.js. Make sure these are installed first:
+### 1. Install Peer Dependencies (if you don't have them already!)
+To avoid any errors or warnings you must ensure the following is installed in your React app:
 
 ```bash
 npm install react react-dom three @react-three/fiber
@@ -27,6 +26,7 @@ npm install react react-dom three @react-three/fiber
 ```bash
 npm install shadersmith-r3f
 ```
+</br>
 
 ## Basic Usage
 
