@@ -1,22 +1,27 @@
 # shadersmith-r3f
+![optimized-liquid-bg](https://github.com/user-attachments/assets/7a8d141d-88da-4a65-beae-3598dc40c1a4)
 
-**A modular animated gradient shader component for React Three Fiber.**
+**Modular/animated shader gradient components for React apps.**
 
-Check out the possibilities of this package by playing around in the web-app:
-https://shadersmith.vercel.app/
+[![npm](https://img.shields.io/npm/v/shadersmith-r3f)](https://www.npmjs.com/package/shadersmith-r3f)
+[![downloads](https://img.shields.io/npm/dm/shadersmith-r3f)](https://www.npmjs.com/package/shadersmith-r3f)
 
-*You can also get copy and pastable code snippets so you can customize your art in the web-app, then have it inside your react app in seconds!*
+**Check it out: 
+https://shadersmith.vercel.app/**. *Customize your own art and drop into your app!*
+<br>
+<br>
 
 ## Dependencies
-
-This package uses a few peer dependencies, so you must install them before shadersmith-r3f in order to avoid errors or warnings.
-
-
+**react, three.js, @react-three/fiber are required to use this package.**
+<br>
+<br>
+**An initialized React application, typically done with vite.**
+<br>
+<br>
 ## Installation
 
-### 1. Install peer dependencies
-
-Shadersmith relies on React Three Fiber and Three.js. Make sure these are installed first:
+### 1. Install Peer Dependencies (if you don't have them already!)
+To avoid any errors or warnings you must ensure the following is installed in your React app:
 
 ```bash
 npm install react react-dom three @react-three/fiber
@@ -27,7 +32,6 @@ npm install react react-dom three @react-three/fiber
 ```bash
 npm install shadersmith-r3f
 ```
-
 ## Basic Usage
 
 ```tsx
@@ -56,6 +60,7 @@ export default function App() {
 
 > **NOTE:** The gradient component scales to full height and width of its parent, so if you are having issues seeing your component, ensure that its parent DOM element has explicit height and width.
 
+
 ## Arguments / Props
 
 | Prop | Type | Default | Description |
@@ -65,4 +70,22 @@ export default function App() {
 | `animationSpeed` | `number (0-1)` | `0.5` | Controls how fast the gradient animates. |
 | `colors` | `RGBA[5]` | Default palette | Array of 5 RGBA colors. Low amplitude may hide some colors. |
 | `grain` | `number (0-100)` | `25` | Grain overlay for softer, distorted, or “film-like” effect. |
+
+
+## Web Application
+You can find the source code for the web app here:
+
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-181717?logo=github)](https://github.com/qinflan/shadersmith)
+<br/>
+<br/>
+
+### Credit
+**Stefan Gustavson & Ian McEwan** for their work on a 3D Simplex Noise Function in WebGL
+<br/>
+https://github.com/ashima/webgl-noise
+<br/>
+https://github.com/stegu/webgl-noise
+
+### Collaboration
+Feel free to open up any pull requests or issues for the web-app/package!
 
