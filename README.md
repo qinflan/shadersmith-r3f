@@ -15,7 +15,7 @@ https://shadersmith.vercel.app/**. *Customize your own art and drop into your ap
 **react, three.js, @react-three/fiber are required to use this package.**
 <br>
 <br>
-**An initialized React application, typically done with vite.**
+**Support is for React 18/19 applications.**
 <br>
 <br>
 ## Installation
@@ -24,8 +24,9 @@ https://shadersmith.vercel.app/**. *Customize your own art and drop into your ap
 To avoid any errors or warnings you must ensure the following is installed in your React app:
 
 ```bash
-npm install react react-dom three @react-three/fiber
+npm install three @react-three/fiber
 ```
+> If using React 18, install @react-three/fiber@8 instead
 
 ### 2. Install Shadersmith
 
